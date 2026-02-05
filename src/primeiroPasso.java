@@ -16,9 +16,10 @@ public class primeiroPasso {
             System.out.println("Voce terá sucesso no bootcamp");
         }
 
-        simuladorDeRendimento();
+        //simuladorDeRendimento();
         //calculadoraYield();
         //verificadorDeLotes();
+        analiseDeRisco();
     }
 
     public static void simuladorDeRendimento(){
@@ -104,4 +105,46 @@ public class primeiroPasso {
         
     }
     
+    public static void analiseDeRisco() {
+        Scanner teclado = new Scanner(System.in);
+        double saldo = 0;
+        int volatilidade = 0;
+        boolean sucesso = false;
+
+        System.out.println("Análise de riscos");
+
+        while (!sucesso) {
+            try {   
+                System.out.print("Informe o seu saldo: ");
+                saldo = teclado.nextDouble();
+                sucesso = true;
+        } catch (InputMismatchException e) {
+            System.err.println("ERRO: voce deve digitar um numero em decimal valido!");
+
+            teclado.next();
+            }
+        }
+
+        while (sucesso) {
+            try {
+            System.out.print("Informe a volatilidade do fundo em uma escala de  1 a 10 (de baixa para alta): ");
+            volatilidade = teclado.nextInt();
+            sucesso = false;
+        } catch (InputMismatchException e) {
+            System.err.println("ERRO: voce deve digitar um numero inteiro valido!");
+
+            teclado.next();
+            }
+        }
+
+        if (saldo >= 1000 && volatilidade <= 3) {
+            System.out.println("Aporte recomendado! Saldo e volatilidade dentro dos parametros de recomendação! ");
+            
+        }else if (saldo < 1000 && volatilidade <= 3 ) {
+            System.out.println("Aporte  é recomendado! Mas o seu saldo está abaixo do recomendado. ");
+        } else {
+            System.out.println("Aporte não recomendando. Volatilidade muito alta para o perfil");
+        }
+
+    }
 }
