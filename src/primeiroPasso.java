@@ -1,5 +1,6 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class primeiroPasso {
     public static void main(String[] args) throws Exception {
@@ -19,7 +20,9 @@ public class primeiroPasso {
         //simuladorDeRendimento();
         //calculadoraYield();
         //verificadorDeLotes();
-        analiseDeRisco();
+        //analiseDeRisco();
+        //gerenciarCarteira();
+        listarAtivos();
     }
 
     public static void simuladorDeRendimento(){
@@ -47,7 +50,6 @@ public class primeiroPasso {
                 teclado.next();
             }
         }
-
         saldoInicial += aporteMensal;
 
         System.out.println("Saldo total registado com sucesso: " + saldoInicial);
@@ -56,12 +58,7 @@ public class primeiroPasso {
 
         double saldoTotal = saldoInicial + (saldoInicial * taxaCdiMensal);
 
-        System.out.println("Novo saldo com os rendimentos: " +  saldoTotal);
-        
-            
-        
-
-       
+        System.out.println("Novo saldo com os rendimentos: " +  saldoTotal);  
     }
 
     public static void calculadoraYield() {
@@ -78,8 +75,6 @@ public class primeiroPasso {
 
         System.out.println("O rendimento desta FII mensal foi de: " + yield + "%");
         System.out.println("O rendimento desta FII Anual foi de: " + yieldAnual + "%");
-
-        
     }
     
     public static void verificadorDeLotes() {
@@ -146,5 +141,35 @@ public class primeiroPasso {
             System.out.println("Aporte não recomendando. Volatilidade muito alta para o perfil");
         }
 
+    }
+
+    public static void gerenciarCarteira() {
+
+        ArrayList<String> carteira = new ArrayList<>();
+
+        carteira.add("MXRF11");
+        carteira.add("GARE11");
+        carteira.add("KNCR11");
+        carteira.add("IT4USA");
+
+        System.out.println("Sua carteira atual possui: " + carteira.size() + " ativos.");
+
+        for (String ativo : carteira) {
+            System.out.println("Ativo monitorado: " + ativo);
+        }
+    }
+
+    public static void listarAtivos() {
+        ArrayList<String> ativos = new ArrayList<>();
+
+        ativos.add("MXRF11");
+        ativos.add("GARE11");
+        ativos.add("CONSR45");
+        ativos.add("KNCR11");
+
+        for (String ativo : ativos) {
+            System.out.println("Analisando indicadores de: " + ativo);
+        }
+        
     }
 }

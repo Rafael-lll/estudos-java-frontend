@@ -52,10 +52,30 @@
           <li>IT4USA</li>
         </ul>
       </section>
+
+      <section id="analise-risco">
+        <h2>Análise de risco operacional</h2>
+
+        <div class="campo">
+          <label for="inputSaldo">Saldo Disponível (R$):</label>
+          <input type="number" id="inputSaldo" placeholder="Ex: 1200,00" />
+        </div>
+
+        <div class="campo">
+          <label for="inputVolatilidade">Volatilidade do Ativo (1-10):</label>
+          <input type="number" id="inputVolatilidade" placeholder="Ex: 1" />
+        </div>
+
+        <button onclick="analisarInvestimento()">Calcular Risco</button>
+
+        <p id="mensagemStatus" class="status-vazio">Aguardando dados...</p>
+      </section>
     </main>
 
     <footer>
       <p>Desenvolvido na trilha Full-stack 2026</p>
     </footer>
+
+    <script src="scripts.js"></script>
   </body>
 </html>
