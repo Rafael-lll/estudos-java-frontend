@@ -1,6 +1,9 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class primeiroPasso {
     public static void main(String[] args) throws Exception {
@@ -8,6 +11,7 @@ public class primeiroPasso {
         int tempoEstudoDiario = 1;  //Horas
         double rendimentoCdi = 11.75;
         boolean focadoNoObjetivo = true;
+        
 
         System.out.println("Estudante de:" + curso);
         System.out.println("Meta diária:" + tempoEstudoDiario + "hora(s)");
@@ -17,12 +21,13 @@ public class primeiroPasso {
             System.out.println("Voce terá sucesso no bootcamp");
         }
 
+        ArrayList<String> minhaLista = listarAtivos();
         //simuladorDeRendimento();
         //calculadoraYield();
         //verificadorDeLotes();
         //analiseDeRisco();
         //gerenciarCarteira();
-        listarAtivos();
+        salvarCarteiraEmArquivo(minhaLista);
     }
 
     public static void simuladorDeRendimento(){
@@ -159,7 +164,7 @@ public class primeiroPasso {
         }
     }
 
-    public static void listarAtivos() {
+    public static ArrayList<String> listarAtivos() {
         ArrayList<String> ativos = new ArrayList<>();
 
         ativos.add("MXRF11");
@@ -170,6 +175,23 @@ public class primeiroPasso {
         for (String ativo : ativos) {
             System.out.println("Analisando indicadores de: " + ativo);
         }
-        
+        return ativos;
+    }
+
+    public static void salvarCarteiraEmArquivo(ArrayList<String> ativos) {
+            String nomeArquivo = "carteira_investimentos.txt"; //definição do nome do arq que será criado
+
+            try(FileWriter fw = new FileWriter(nomeArquivo); //logica da criação
+                PrintWriter pw = new PrintWriter(fw)) {
+                
+                    for (String ativo : ativos) {
+                        pw.println(ativo); //recebendo os elementos no arq
+                    }
+                
+                    System.out.println("Carteira salva com sucesso em: " + nomeArquivo ); //se tudo der certo..
+            } catch (IOException e) {
+                System.err.println("Erro ao salvar o arquivo: " + e.getMessage()); // caso seja demonstrada alguma falha...
+            }
+
     }
 }
