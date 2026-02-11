@@ -42,3 +42,36 @@ window.onload = function () {
     console.log("Saldo recuperado com sucesso!");
   }
 };
+
+let ativosFiis = JSON.parse(localStorage.getItem("listaFiis")) || [
+  "MXRF11",
+  "GARE11",
+  "KNCR11",
+  "IT4USA",
+];
+
+function renderizarLista() {
+  const listaUl = document.getElementById("Lista-fiis");
+  listaUl.innerHTML = ""; //garantir que um campo esteja vazio
+
+  ativosFiis.forEach((ativo) => {
+    const li = document.createElement("li"); //criar um elemento na page sem precisar mudar o HTML
+    li.innerText = ativo; //preenchendo o campo (li)
+    listaUl.appendChild(li); //anexando o filho "li" ao pai "UL"
+  });
+}
+
+function adicionarAtivo() {
+  const campoAtivo = document.getElementById("novoAtivo");
+  const novoTicker = campoAtivo.value.toUpperCase().trim();
+
+  if (novoTicker !== "") {
+    ativosFiis.push(novoTicker);
+    localStorage.setItem("listaFiis", JSON.stringify(ativosFiis));
+    campoAtivo.value = "";
+    renderizarLista();
+    console.log("Ativo adicionado: " + novoTicker);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", renderizarLista);

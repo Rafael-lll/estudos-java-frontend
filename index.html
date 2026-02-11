@@ -45,12 +45,16 @@
 
       <section id="fundos-imobil">
         <h2>FIIs</h2>
-        <ul>
-          <li>MXRF11</li>
-          <li>GARE11</li>
-          <li>KNCR11</li>
-          <li>IT4USA</li>
-        </ul>
+
+        <div class="add-contain">
+          <input
+            type="text"
+            id="novoAtivo"
+            placeholder="Digite o ticker (Ex: HGLG11)"
+          />
+          <button onclick="adicionarAtivo()">Adicionar</button>
+        </div>
+        <ul id="Lista-fiis"></ul>
       </section>
 
       <section id="analise-risco">

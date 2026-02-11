@@ -46,3 +46,14 @@ button {
 button:hover {
   background-color: #004494;
 }
+
+.add-contain {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.add-contain input {
+  flex: 1;
+  padding: 5px;
+}
