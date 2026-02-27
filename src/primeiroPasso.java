@@ -22,12 +22,12 @@ public class primeiroPasso {
         }
 
         ArrayList<String> minhaLista = listarAtivos();
-        //simuladorDeRendimento();
+        simuladorDeRendimento();
         //calculadoraYield();
         //verificadorDeLotes();
         //analiseDeRisco();
         //gerenciarCarteira();
-        salvarCarteiraEmArquivo(minhaLista);
+        //salvarCarteiraEmArquivo(minhaLista);
     }
 
     public static void simuladorDeRendimento(){
@@ -35,8 +35,8 @@ public class primeiroPasso {
         double saldoInicial = 0;
         double aporteMensal = 0;
 
-        Scanner teclado = new Scanner(System.in);
-        boolean sucesso = false;
+        Scanner teclado = new Scanner(System.in); // declaração para entrada de dados atraves do usuario
+        boolean sucesso = false; //uso de flags
 
         System.out.println("Exercicio 1: Simulador de rendimento (operadores basicos)");
         
@@ -44,17 +44,24 @@ public class primeiroPasso {
             try{
                 System.out.print("Informe seu saldo atual: ");
                 saldoInicial = teclado.nextDouble();
-
-                System.out.print("Informe qual vai ser o seu aporte mensal: ");
-                aporteMensal = teclado.nextDouble();
-
-                sucesso = true;
+                sucesso = true; //uso de flags
             } catch(InputMismatchException e){
                 System.err.println("ERRO: Por favor digite apenas numeros decimais usando virgula.");
-
-                teclado.next();
+                teclado.next(); //obrigatorio no try-catch
             }
-        }
+        } //try-catch usado para garantir a segurança dos dados, para que seja feita a inserção de forma correta dos dados
+
+        while (sucesso) {
+            try{
+                System.out.print("Informe qual vai ser o seu aporte mensal: ");
+                aporteMensal = teclado.nextDouble();
+                sucesso = false; 
+            } catch(InputMismatchException e){
+                System.err.println("ERRO: Por favor digite apenas numeros decimais usando virgula.");
+                teclado.next(); 
+            }
+        } 
+
         saldoInicial += aporteMensal;
 
         System.out.println("Saldo total registado com sucesso: " + saldoInicial);
@@ -68,13 +75,34 @@ public class primeiroPasso {
 
     public static void calculadoraYield() {
         Scanner teclado = new Scanner(System.in);
+        double precoMxrf = 0;
+        double ultimoRend = 0;
+        boolean sucesso = false;
 
         System.out.println("Exercicio 2: Calculadora de Dividend Yield (porcentagem)");
-        System.out.println("Digite o valor atual da cota: (ex: 9,43) ");
-        double precoMxrf = teclado.nextDouble();
-        System.out.print("Digite o valor do ultimo rendimento: ");
-        double ultimoRend = teclado.nextDouble();
 
+        while (!sucesso) {
+            try{
+                System.out.println("Digite o valor atual da cota: (ex: 9,43) ");
+                precoMxrf = teclado.nextDouble();
+                sucesso = true;
+            } catch (InputMismatchException e) {
+            System.err.println("Erro: Digite apenas numeros decimais usando virgula!");
+            teclado.next();
+        }
+        }
+
+        while (sucesso) {
+            try{
+                System.out.print("Digite o valor do ultimo rendimento: ");
+                ultimoRend = teclado.nextDouble();
+                sucesso = false;
+            } catch (InputMismatchException e) {
+            System.err.println("Erro: Digite apenas numeros decimais usando virgula!");
+            teclado.next();
+        }
+        }
+        
         double yield = (ultimoRend / precoMxrf ) * 100;
         double yieldAnual = yield * 12;
 
