@@ -54,9 +54,19 @@ function renderizarLista() {
   const listaUl = document.getElementById("Lista-fiis");
   listaUl.innerHTML = ""; //garantir que um campo esteja vazio
 
-  ativosFiis.forEach((ativo) => {
+  ativosFiis.forEach((ativo, index) => {
     const li = document.createElement("li"); //criar um elemento na page sem precisar mudar o HTML
-    li.innerText = ativo; //preenchendo o campo (li)
+    li.innerText = ativo + " "; //preenchendo o campo (li)
+    //logica de criacao do butao
+    const butnRemove = document.createElement("Button");
+    butnRemove.innerText = "❌";
+    butnRemove.classList.add("butn-exclui");
+
+    butnRemove.onclick = function () {
+      //quando tivermos o clique irá chamar a funcão que retira o item da lista
+      removerAtivo(index);
+    };
+    li.appendChild(butnRemove); //add o botao
     listaUl.appendChild(li); //anexando o filho "li" ao pai "UL"
   });
 }
@@ -74,4 +84,13 @@ function adicionarAtivo() {
   }
 }
 
+function removerAtivo(pos) {
+  //remove um item na posicao indicada
+  ativosFiis.splice(pos, 1);
+  // atualizamos o banco de dados do navegador
+  localStorage.setItem("listaFiis", JSON.stringify(ativosFiis));
+  //mostramos a nova lista paos a remocao
+  renderizarLista();
+  console.log("Ativo removido da sua carteira");
+}
 document.addEventListener("DOMContentLoaded", renderizarLista);

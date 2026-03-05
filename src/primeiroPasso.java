@@ -4,24 +4,25 @@ import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+
 
 public class primeiroPasso {
     public static void main(String[] args) throws Exception {
-        String curso = "Análise e Desenvolvimento de Sistemas";
-        int tempoEstudoDiario = 1;  //Horas
         double rendimentoCdi = 11.75;
-        boolean focadoNoObjetivo = true;
-        
-
-        System.out.println("Estudante de:" + curso);
-        System.out.println("Meta diária:" + tempoEstudoDiario + "hora(s)");
-        System.out.println("Taxa atual do cdi:" + rendimentoCdi + "%");
-
-        if (focadoNoObjetivo) {
-            System.out.println("Voce terá sucesso no bootcamp");
-        }
-
         ArrayList<String> minhaLista = listarAtivos();
+        ArrayList<String> carteiraAtual = carregarCarteiraDoArquivo();
+
+        if(carteiraAtual.isEmpty()) {
+            carteiraAtual = listarAtivos();
+            salvarCarteiraEmArquivo(carteiraAtual);
+        }
+        
+        System.out.println("--- Sua carteira de investimentos ---");
+        for (String ativo : carteiraAtual) {
+            System.out.println("Stonks " + ativo);
+        }
         simuladorDeRendimento();
         //calculadoraYield();
         //verificadorDeLotes();
@@ -83,7 +84,7 @@ public class primeiroPasso {
 
         while (!sucesso) {
             try{
-                System.out.println("Digite o valor atual da cota: (ex: 9,43) ");
+                System.out.print("Digite o valor atual da cota: (ex: 9,43) ");
                 precoMxrf = teclado.nextDouble();
                 sucesso = true;
             } catch (InputMismatchException e) {
@@ -103,7 +104,7 @@ public class primeiroPasso {
         }
         }
         
-        double yield = (ultimoRend / precoMxrf ) * 100;
+        double yield = (ultimoRend / precoMxrf ) * 100; //calculo basico para a funcionalidade principal do metodo
         double yieldAnual = yield * 12;
 
         System.out.println("O rendimento desta FII mensal foi de: " + yield + "%");
@@ -122,11 +123,12 @@ public class primeiroPasso {
         
             System.out.println("Vão sobrar " + sobra + " ações de um lote completo de 10");
 
-                if (sobra == 0) {
+                if (sobra == 0) { // comparação simples
                     System.out.println("É um lote perfeito");   
                     }
         } catch (InputMismatchException e) {
             System.err.println("ERRO: voce deve digitar um numero inteiro valido!");
+            teclado.next();
         } finally {
             System.out.println("Fim de verificação.");
         }
@@ -148,7 +150,6 @@ public class primeiroPasso {
                 sucesso = true;
         } catch (InputMismatchException e) {
             System.err.println("ERRO: voce deve digitar um numero em decimal valido!");
-
             teclado.next();
             }
         }
@@ -160,12 +161,11 @@ public class primeiroPasso {
             sucesso = false;
         } catch (InputMismatchException e) {
             System.err.println("ERRO: voce deve digitar um numero inteiro valido!");
-
             teclado.next();
             }
         }
 
-        if (saldo >= 1000 && volatilidade <= 3) {
+        if (saldo >= 1000 && volatilidade <= 3) { //comparacao de dois fatores para verificar uma situacao especifica
             System.out.println("Aporte recomendado! Saldo e volatilidade dentro dos parametros de recomendação! ");
             
         }else if (saldo < 1000 && volatilidade <= 3 ) {
@@ -178,7 +178,7 @@ public class primeiroPasso {
 
     public static void gerenciarCarteira() {
 
-        ArrayList<String> carteira = new ArrayList<>();
+        ArrayList<String> carteira = new ArrayList<>(); // criacção de um novo array para armazenar os itens na minha carteira
 
         carteira.add("MXRF11");
         carteira.add("GARE11");
@@ -187,11 +187,11 @@ public class primeiroPasso {
 
         System.out.println("Sua carteira atual possui: " + carteira.size() + " ativos.");
 
-        for (String ativo : carteira) {
+        for (String ativo : carteira) { // percorrendo o array por completo
             System.out.println("Ativo monitorado: " + ativo);
         }
     }
-
+  
     public static ArrayList<String> listarAtivos() {
         ArrayList<String> ativos = new ArrayList<>();
 
@@ -221,5 +221,22 @@ public class primeiroPasso {
                 System.err.println("Erro ao salvar o arquivo: " + e.getMessage()); // caso seja demonstrada alguma falha...
             }
 
+    }
+
+    public static ArrayList<String> carregarCarteiraDoArquivo() {
+        ArrayList<String> ativosCarregados = new ArrayList<>();
+        File arquivo = new File("Carteira_investimentos.txt");
+
+        try (Scanner leitor = new Scanner(arquivo)){
+            while (leitor.hasNextLine()) {
+                String ticker = leitor.nextLine();
+                ativosCarregados.add(ticker);
+            }
+            System.out.println("Dados carregados com sucesso no disco rigido!");
+        } catch (FileNotFoundException e) {
+            System.err.println("Arquivo não encontrado na maquina: " + e.getMessage());
+        }
+
+        return ativosCarregados;
     }
 }
